@@ -2,11 +2,13 @@ node.name =~ /^([^.]+)(\.(.+))?$/
 hostname = $1
 domain = $3
 if domain.nil?
-  domain = node['hostname']['domain']
+  domain = node['opsline-hostname']['domain']
+end
+
 
 # decide what IP address will be used in the hosts file
 host_ip = begin
-  if node['hostname']['use_localhost_ip']
+  if node['opsline-hostname']['use_localhost_ip']
     '127.0.0.1'
   elsif node.attribute?('cloud')
      node['cloud']['local_ipv4']
@@ -15,9 +17,12 @@ host_ip = begin
   end
 end
 
+
 # set hostname only if we can build FQDN
 if hostname and domain
   fqdn = "#{hostname}.#{domain}"
+  
+  Chef::Log.info("Setting hostname to #{fqdn}")
 
 
   # reload ohai, but not now
@@ -74,5 +79,7 @@ if hostname and domain
   end
 
 
+else
+  Chef::Log.warn("Hostname will not be set")
 end
 

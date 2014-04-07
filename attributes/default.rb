@@ -1,2 +1,2 @@
-default['hostname']['domain'] = nil
-default['hostname']['use_localhost_ip'] = false
+default['opsline-hostname']['domain'] = nil
+default['opsline-hostname']['use_localhost_ip'] = false

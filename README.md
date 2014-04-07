@@ -11,8 +11,8 @@ Requirements
 
 Attributes
 ----------
-* `node['hostname']['domain']` - domain to be used if node name is not FQDN
-* `node['hostname']['use_localhost_ip']` - if true, `127.0.0.1` will be used in `/etc/hosts`
+* `node['opsline-hostname']['domain']` - domain to be used if node name is not FQDN
+* `node['opsline-hostname']['use_localhost_ip']` - if true, `127.0.0.1` will be used in `/etc/hosts`
 
 
 Usage
