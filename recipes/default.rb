@@ -5,11 +5,15 @@ if domain.nil?
   domain = node['hostname']['domain']
 
 # decide what IP address will be used in the hosts file
-if node['hostname']['use_ipaddress']
-  host_ip = node['ipaddress']
-else
-  host_ip = '127.0.0.1'
-
+host_ip = begin
+  if node['hostname']['use_localhost_ip']
+    '127.0.0.1'
+  elsif node.attribute?('cloud')
+     node['cloud']['local_ipv4']
+  else
+    node['ipaddress']
+  end
+end
 
 # set hostname only if we can build FQDN
 if hostname and domain
