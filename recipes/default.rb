@@ -22,7 +22,13 @@ end
 if hostname and domain
   fqdn = "#{hostname}.#{domain}"
   
-  Chef::Log.info("Setting hostname to #{fqdn}")
+  if node['opsline-hostname']['use_fqdn']
+    hostname_to_set = fqdn
+  else
+    hostname_to_set = hostname
+  end
+  
+  Chef::Log.info("Setting hostname to #{hostname_to_set}")
 
 
   # reload ohai, but not now
@@ -36,7 +42,7 @@ if hostname and domain
 
   # redhat family
   when 'redhat', 'centos', 'amazon'
-    hostname_string = "HOSTNAME=#{fqdn}"
+    hostname_string = "HOSTNAME=#{hostname_to_set}"
     ruby_block 'update_sysconfig_network' do
       block do
         netfile = Chef::Util::FileEdit.new('/etc/sysconfig/network')
@@ -49,7 +55,7 @@ if hostname and domain
   # debians and whatever else
   else
     file '/etc/hostname' do
-      content "#{hostname}\n"
+      content "#{hostname_to_set}\n"
       mode '0644'
       notifies :reload, 'ohai[reload]', :immediate
     end
@@ -58,8 +64,8 @@ if hostname and domain
 
 
   # set the hostname
-  execute "hostname #{hostname}" do
-    only_if { node['hostname'] != hostname }
+  execute "hostname #{hostname_to_set}" do
+    only_if { node['hostname'] != hostname_to_set }
     notifies :reload, 'ohai[reload]', :immediate
   end
 
