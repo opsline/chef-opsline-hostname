@@ -65,7 +65,7 @@ if hostname and domain
 
   # set the hostname
   execute "hostname #{hostname_to_set}" do
-    only_if { node['hostname'] != hostname_to_set }
+    only_if { node['hostname'] != hostname }
     notifies :reload, 'ohai[reload]', :immediate
   end
 
