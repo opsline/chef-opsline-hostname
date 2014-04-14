@@ -1,3 +1,12 @@
+#
+# Cookbook Name:: opsline-hostname
+# Recipe:: default
+#
+# Copyright (C) 2014 Opsline
+# 
+# All rights reserved - Do Not Redistribute
+#
+
 node.name =~ /^([^.]+)(\.(.+))?$/
 hostname = $1
 domain = $3
