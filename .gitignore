@@ -15,3 +15,5 @@ bin/*
 
 # Eclipse
 .project
+.kitchen/
+.kitchen.local.yml
