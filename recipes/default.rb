@@ -42,13 +42,13 @@ end
 # set hostname only if we can build FQDN
 if hostname and domain
   fqdn = "#{hostname}.#{domain}"
-  
+
   if node['opsline-hostname']['use_fqdn']
     hostname_to_set = fqdn
   else
     hostname_to_set = hostname
   end
-  
+
   Chef::Log.info("Setting hostname to #{hostname_to_set}")
 
 
@@ -80,6 +80,11 @@ if hostname and domain
       mode '0644'
       notifies :reload, 'ohai[reload]', :immediate
     end
+    file '/etc/domainname' do
+      content "#{domain}\n"
+      mode '0644'
+      notifies :reload, 'ohai[reload]', :immediate
+    end
 
   end
 
@@ -106,7 +111,21 @@ if hostname and domain
   end
 
 
+  # set cloud init preserve_hostname parameter
+  if node['opsline-hostname']['cloudinit_preserve_hostname']
+    ruby_block "set cloudinit preserve hostname" do
+      block do
+        if File.exists?('/etc/cloud/cloud.cfg')
+          file = Chef::Util::FileEdit.new('/etc/cloud/cloud.cfg')
+          file.search_file_replace_line(/preserve_hostname:\s+[Ff]alse/, 'preserve_hostname: True')
+          file.write_file
+        end
+      end
+      action :run
+    end
+  end
+
+
 else
   Chef::Log.warn("Hostname will not be set")
 end
-

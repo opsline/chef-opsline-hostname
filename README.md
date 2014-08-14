@@ -18,6 +18,8 @@ Attributes
   if true, `127.0.0.1` will be used in `/etc/hosts`
 * `node['opsline-hostname']['use_fqdn']`
   if true, hostname will be set to FQDN; if false, only node name will be used
+* `node['opsline-hostname']['cloudinit_preserve_hostname']`
+  if true, `preserve_hostname` will be set to `True` in /etc/cloud/cloud.cfg
 
 
 Usage
