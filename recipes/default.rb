@@ -31,8 +31,6 @@ end
 host_ip = begin
   if node['opsline-hostname']['use_localhost_ip']
     '127.0.0.1'
-  elsif node.attribute?('cloud')
-     node['cloud']['local_ipv4']
   else
     node['ipaddress']
   end

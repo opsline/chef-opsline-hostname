@@ -2,6 +2,9 @@
 
 This file is used to list changes made in each version of the opsline-hostname cookbook.
 
+# 1.4.0
+* not using `node['cloud']['local_ipv4']`
+
 ## 1.3.0
 * adding `cloudinit_preserve_hostname` attribute
 * debian will write /etc/domainname file
