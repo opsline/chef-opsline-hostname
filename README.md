@@ -12,6 +12,8 @@ Requirements
 
 Attributes
 ----------
+* `node['opsline-hostname']['hostname']`
+  hostname to be used instead of node name
 * `node['opsline-hostname']['domain']`
   domain to be used if node name is not FQDN
 * `node['opsline-hostname']['use_localhost_ip']`
@@ -33,11 +35,12 @@ This recipe will:
 * make hostname setting permanent
 * create entries in /etc/hosts file
 
-Hostname will be based on the node name:
-* if the nodename is a FQDN, it will be parsed to get host name and domain
-  name to set the hostname.
-* if the nodename is a not FQDN, the domain must be provided with an attribute.
-* if domain cannot be extracted from FQDN or is not provided as attribute,
+Hostname will be based on the node name or overridden `node['opsline-hostname']['hostname']` attribute:
+* if the nodename (or overridden `node['opsline-hostname']['hostname']` attribute) is a FQDN, 
+  it will be parsed to get host name and domain name to set the hostname.
+* if the nodename (or overridden `node['opsline-hostname']['hostname']` attribute) is not a FQDN, 
+  the domain must be provided with an attribute.
+* if domain cannot be extracted from FQDN or is not provided as an attribute,
   recipe will do nothing.
 * by default, hostname will be set to FQDN. Setting `use_fqdn` attribute to false
   will cause hostname to be the nodename string.
