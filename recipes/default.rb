@@ -20,7 +20,7 @@
 #
 
 node.name =~ /^([^.]+)(\.(.+))?$/
-hostname = $1
+hostname = node['opsline-hostname']['hostname'] ? node['opsline-hostname']['hostname'] : $1
 domain = $3
 if domain.nil?
   domain = node['opsline-hostname']['domain']
@@ -45,6 +45,11 @@ if hostname and domain
     hostname_to_set = fqdn
   else
     hostname_to_set = hostname
+  end
+
+  if hostname_to_set.include?('_')
+    log "FQDN #{hostname_to_set} is invalid due to containing underscore character(s); substituting underscores with dashes"
+    hostname_to_set = hostname_to_set.gsub('_','-')
   end
 
   Chef::Log.info("Setting hostname to #{hostname_to_set}")

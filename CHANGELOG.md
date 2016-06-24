@@ -2,6 +2,9 @@
 
 This file is used to list changes made in each version of the opsline-hostname cookbook.
 
+# 1.4.1
+* optional override of default node.name with `node['opsline-hostname']['hostname']`
+
 # 1.4.0
 * not using `node['cloud']['local_ipv4']`
 

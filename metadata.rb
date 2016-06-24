@@ -4,7 +4,7 @@ maintainer_email 'radek@opsline.com'
 license          'All rights reserved'
 description      'Configures hostname'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
-version          '1.4.0'
+version          '1.4.1'
 
 supports 'redhat'
 supports 'amazon'
