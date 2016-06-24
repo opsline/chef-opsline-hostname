@@ -47,6 +47,11 @@ if hostname and domain
     hostname_to_set = hostname
   end
 
+  if hostname_to_set.include?('_')
+    log "FQDN #{hostname_to_set} is invalid due to containing underscore character(s); substituting underscores with dashes"
+    hostname_to_set = hostname_to_set.gsub('_','-')
+  end
+
   Chef::Log.info("Setting hostname to #{hostname_to_set}")
 
 
