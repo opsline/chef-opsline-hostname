@@ -20,7 +20,7 @@
 #
 
 node.name =~ /^([^.]+)(\.(.+))?$/
-hostname = $1
+hostname = node['opsline-hostname']['hostname'] ? node['opsline-hostname']['hostname'] : $1
 domain = $3
 if domain.nil?
   domain = node['opsline-hostname']['domain']
